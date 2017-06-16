@@ -8,7 +8,8 @@
 #ifndef __MY_I2C_H_
 #define __MY_I2C_H_
 #include "driverlib.h"
-//#include "pin_info.h"
+
+#define I2C_BUF_SIZE    16
 typedef struct{
     uint32_t sda_scl_port;
     uint32_t sda_pin;
