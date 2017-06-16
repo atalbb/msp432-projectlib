@@ -208,7 +208,7 @@ int8_t I2C_read(uint8_t dev_addr, uint8_t reg_addr, uint8_t *reg_data, uint8_t c
         while((*IFG&0x0001) == 0){      // wait for complete character received
           if(*IFG&0x0030){              // bit5 set on not-acknowledge; bit4 set on arbitration lost
             //I2C_Init();                    // reset to known state
-            return 0xFFFF;
+            return -1;
           }
         }
         *reg_data++= *RXBUF&0xFF;            // get the reply

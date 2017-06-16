@@ -59,10 +59,10 @@
 #ifndef MAX30102_H_
 #define MAX30102_H_
 
-#include "mbed.h"
 
-#define I2C_WRITE_ADDR 0xAE
-#define I2C_READ_ADDR 0xAF
+//#define I2C_WRITE_ADDR 0xAE
+//#define I2C_READ_ADDR 0xAF
+#define MAX30102_I2C_ADDRESS    0xAE
 
 //register addresses
 #define REG_INTR_STATUS_1 0x00

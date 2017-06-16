@@ -10,6 +10,8 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./MAX30102.obj" \
+"./algorithm.obj" \
 "./main.obj" \
 "./my_clk.obj" \
 "./my_i2c.obj" \
@@ -158,8 +160,8 @@ MAXREFDES117_lib.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "my_clk.obj" "my_i2c.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" 
-	-$(RM) "main.d" "my_clk.d" "my_i2c.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" 
+	-$(RM) "MAX30102.obj" "algorithm.obj" "main.obj" "my_clk.obj" "my_i2c.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" 
+	-$(RM) "MAX30102.d" "algorithm.d" "main.d" "my_clk.d" "my_i2c.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

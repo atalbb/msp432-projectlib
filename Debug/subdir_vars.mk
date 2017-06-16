@@ -9,6 +9,8 @@ CMD_SRCS += \
 ../msp432p401r.cmd 
 
 C_SRCS += \
+../MAX30102.c \
+../algorithm.c \
 ../main.c \
 ../my_clk.c \
 ../my_i2c.c \
@@ -16,6 +18,8 @@ C_SRCS += \
 ../system_msp432p401r.c 
 
 C_DEPS += \
+./MAX30102.d \
+./algorithm.d \
 ./main.d \
 ./my_clk.d \
 ./my_i2c.d \
@@ -23,6 +27,8 @@ C_DEPS += \
 ./system_msp432p401r.d 
 
 OBJS += \
+./MAX30102.obj \
+./algorithm.obj \
 ./main.obj \
 ./my_clk.obj \
 ./my_i2c.obj \
@@ -30,6 +36,8 @@ OBJS += \
 ./system_msp432p401r.obj 
 
 OBJS__QUOTED += \
+"MAX30102.obj" \
+"algorithm.obj" \
 "main.obj" \
 "my_clk.obj" \
 "my_i2c.obj" \
@@ -37,6 +45,8 @@ OBJS__QUOTED += \
 "system_msp432p401r.obj" 
 
 C_DEPS__QUOTED += \
+"MAX30102.d" \
+"algorithm.d" \
 "main.d" \
 "my_clk.d" \
 "my_i2c.d" \
@@ -44,6 +54,8 @@ C_DEPS__QUOTED += \
 "system_msp432p401r.d" 
 
 C_SRCS__QUOTED += \
+"../MAX30102.c" \
+"../algorithm.c" \
 "../main.c" \
 "../my_clk.c" \
 "../my_i2c.c" \

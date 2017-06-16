@@ -79,14 +79,20 @@ bool maxim_max30102_write_reg(uint8_t uch_addr, uint8_t uch_data)
 * \retval       true on success
 */
 {
-  char ach_i2c_data[2];
-  ach_i2c_data[0]=uch_addr;
-  ach_i2c_data[1]=uch_data;
+//  char ach_i2c_data[2];
+//  ach_i2c_data[0]=uch_addr;
+//  ach_i2c_data[1]=uch_data;
+//
+//  if(i2c.write(I2C_WRITE_ADDR, ach_i2c_data, 2, false)==0)
+//    return true;
+//  else
+//    return false;
+ if(!I2C_write(MAX30102_I2C_ADDRESS, uch_addr, &uch_data, 1)){
+     return true;
+ }
+ return false;
 
-  if(i2c.write(I2C_WRITE_ADDR, ach_i2c_data, 2, false)==0)
-    return true;
-  else
-    return false;
+
 }
 
 bool maxim_max30102_read_reg(uint8_t uch_addr, uint8_t *puch_data)
@@ -101,16 +107,20 @@ bool maxim_max30102_read_reg(uint8_t uch_addr, uint8_t *puch_data)
 * \retval       true on success
 */
 {
-  char ch_i2c_data;
-  ch_i2c_data=uch_addr;
-  if(i2c.write(I2C_WRITE_ADDR, &ch_i2c_data, 1, true)!=0)
-    return false;
-  if(i2c.read(I2C_READ_ADDR, &ch_i2c_data, 1, false)==0)
-  {
-    *puch_data=(uint8_t) ch_i2c_data;
-    return true;
-  }
-  else
+//  char ch_i2c_data;
+//  ch_i2c_data=uch_addr;
+//  if(i2c.write(I2C_WRITE_ADDR, &ch_i2c_data, 1, true)!=0)
+//    return false;
+//  if(i2c.read(I2C_READ_ADDR, &ch_i2c_data, 1, false)==0)
+//  {
+//    *puch_data=(uint8_t) ch_i2c_data;
+//    return true;
+//  }
+//  else
+//    return false;
+    if(!I2C_read(MAX30102_I2C_ADDRESS, uch_addr, puch_data, 1)){
+        return true;
+    }
     return false;
 }
 
@@ -173,13 +183,18 @@ bool maxim_max30102_read_fifo(uint32_t *pun_red_led, uint32_t *pun_ir_led)
   maxim_max30102_read_reg(REG_INTR_STATUS_1, &uch_temp);
   maxim_max30102_read_reg(REG_INTR_STATUS_2, &uch_temp);
 
-  ach_i2c_data[0]=REG_FIFO_DATA;
-  if(i2c.write(I2C_WRITE_ADDR, ach_i2c_data, 1, true)!=0)
-    return false;
-  if(i2c.read(I2C_READ_ADDR, ach_i2c_data, 6, false)!=0)
-  {
-    return false;
+//  ach_i2c_data[0]=REG_FIFO_DATA;
+//  if(i2c.write(I2C_WRITE_ADDR, ach_i2c_data, 1, true)!=0)
+//    return false;
+//  if(i2c.read(I2C_READ_ADDR, ach_i2c_data, 6, false)!=0)
+//  {
+//    return false;
+//  }
+  if(I2C_read(MAX30102_I2C_ADDRESS, REG_FIFO_DATA, ach_i2c_data, 6)==-1){
+      return false;
   }
+
+
   un_temp=(unsigned char) ach_i2c_data[0];
   un_temp<<=16;
   *pun_red_led+=un_temp;
