@@ -1,0 +1,1 @@
+"./adc.obj" "./clk.obj" "./debug.obj" "./main.obj" "./printfOverride.obj" "./startup_msp432p401r_ccs.obj" "./system_msp432p401r.obj" "./systick.obj" "../msp432p401r.cmd" -llibc.a -l"C:/ti/msp/MSP432Ware_3_50_00_02/driverlib/driverlib/MSP432P4xx/ccs/msp432p4xx_driverlib.lib" 
