@@ -10,13 +10,19 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./I2C0.obj" \
 "./MAX30102.obj" \
 "./algorithm.obj" \
+"./bme280.obj" \
+"./bme280_sensor.obj" \
 "./main.obj" \
 "./my_clk.obj" \
 "./my_i2c.obj" \
+"./printfOverride.obj" \
 "./startup_msp432p401r_ccs.obj" \
 "./system_msp432p401r.obj" \
+"./systick.obj" \
+"./uart.obj" \
 "../msp432p401r.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -160,8 +166,8 @@ MAXREFDES117_lib.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "MAX30102.obj" "algorithm.obj" "main.obj" "my_clk.obj" "my_i2c.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" 
-	-$(RM) "MAX30102.d" "algorithm.d" "main.d" "my_clk.d" "my_i2c.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" 
+	-$(RM) "I2C0.obj" "MAX30102.obj" "algorithm.obj" "bme280.obj" "bme280_sensor.obj" "main.obj" "my_clk.obj" "my_i2c.obj" "printfOverride.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" "systick.obj" "uart.obj" 
+	-$(RM) "I2C0.d" "MAX30102.d" "algorithm.d" "bme280.d" "bme280_sensor.d" "main.d" "my_clk.d" "my_i2c.d" "printfOverride.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" "systick.d" "uart.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

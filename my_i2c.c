@@ -42,7 +42,7 @@ void init_i2c(_S_I2C_CONFIG *i2c_config){
 
         //IV = ((volatile uint16_t *)(0x40002400));
     }else if(i2c_config->i2c_num == 1){
-        CTLW0 = ((volatile uint16_t *)(0x40004C00));
+        CTLW0 = ((volatile uint16_t *)(0x40002400));
         CTLW1 = ((volatile uint16_t *)(0x40002402));
         BRW = ((volatile uint16_t *)(0x40002406));
         TBCNT = ((volatile uint16_t *)(0x4000240A));
@@ -68,8 +68,8 @@ void init_i2c(_S_I2C_CONFIG *i2c_config){
         IFG = ((volatile uint16_t *)(0x40002C2C));
         //IV = ((volatile uint16_t *)(0x40002400));
     }
-    *CTLW0 = 0;
-    *CTLW0 = 0x0F1 | i2c_config->clkSrc;
+    *CTLW0 = 0x0000;
+    *CTLW0 = 0x0F01 | i2c_config->clkSrc;
     *CTLW1 = 0x00C8;
     *TBCNT = 2;
     *BRW = i2c_config->div;
