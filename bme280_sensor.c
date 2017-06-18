@@ -225,8 +225,8 @@ void bme280_sensor_init(){
     /* Select Port 6 for I2C - Set Pin 4, 5 to input Primary Module Function,
      *   (UCB1SIMO/UCB1SDA, UCB1SOMI/UCB1SCL).
      */
-    MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P6,
-            GPIO_PIN4 | GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);
+//    MAP_GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P6,
+//            GPIO_PIN4 | GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);
 
     //I2C_Init();  // initialize eUSCI
     init_i2c(&g_i2c0);

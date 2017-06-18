@@ -25,7 +25,7 @@ volatile uint16_t *RXBUF;
 void init_i2c(_S_I2C_CONFIG *i2c_config){
     // initialize eUSCI
     MAP_GPIO_setAsPeripheralModuleFunctionInputPin(i2c_config->pin_info.sda_scl_port,
-            i2c_config->pin_info.sda_pin | i2c_config->pin_info.scl_pin, i2c_config->pin_info.sda_scl_port);
+            i2c_config->pin_info.sda_pin | i2c_config->pin_info.scl_pin, i2c_config->pin_info.func);
     if(i2c_config->i2c_num == 0){
         CTLW0 = ((volatile uint16_t *)(0x40002000));
         CTLW1 = ((volatile uint16_t *)(0x40002002));
