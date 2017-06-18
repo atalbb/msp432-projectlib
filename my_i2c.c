@@ -33,14 +33,10 @@ void init_i2c(_S_I2C_CONFIG *i2c_config){
         TBCNT = ((volatile uint16_t *)(0x4000200A));
         STATW = ((volatile uint16_t *)(0x40002008));
         I2CSA = ((volatile uint16_t *)(0x40002020));
-
-        //RXCNT = ((volatile uint16_t *)(0x40002400));
         TXBUF = ((volatile uint16_t *)(0x4000200E));
         IE = ((volatile uint16_t *)(0x4000202A));
         IFG = ((volatile uint16_t *)(0x4000202C));
         RXBUF = ((volatile uint16_t *)(0x4000200C));
-
-        //IV = ((volatile uint16_t *)(0x40002400));
     }else if(i2c_config->i2c_num == 1){
         CTLW0 = ((volatile uint16_t *)(0x40002400));
         CTLW1 = ((volatile uint16_t *)(0x40002402));
@@ -49,32 +45,26 @@ void init_i2c(_S_I2C_CONFIG *i2c_config){
         STATW = ((volatile uint16_t *)(0x40002408));
         I2CSA = ((volatile uint16_t *)(0x40002420));
         RXBUF = ((volatile uint16_t *)(0x4000240C));
-        //RXCNT = ((volatile uint16_t *)(0x40002400));
         TXBUF = ((volatile uint16_t *)(0x4000240E));
         IE = ((volatile uint16_t *)(0x4000242A));
         IFG = ((volatile uint16_t *)(0x4000242C));
-        //IV = ((volatile uint16_t *)(0x40002400));
     }else if(i2c_config->i2c_num == 3){
         CTLW0 = ((volatile uint16_t *)(0x40002C00));
-        CTLW1 = ((volatile uint16_t *)(0x4000Cc02));
+        CTLW1 = ((volatile uint16_t *)(0x40002C02));
         BRW = ((volatile uint16_t *)(0x40002C06));
         TBCNT = ((volatile uint16_t *)(0x40002C0A));
         STATW = ((volatile uint16_t *)(0x40002C08));
         I2CSA = ((volatile uint16_t *)(0x40002C20));
-        //RXCNT = ((volatile uint16_t *)(0x40002400));
         TXBUF = ((volatile uint16_t *)(0x40002C0E));
         RXBUF = ((volatile uint16_t *)(0x40002C0C));
         IE = ((volatile uint16_t *)(0x40002C2A));
         IFG = ((volatile uint16_t *)(0x40002C2C));
-        //IV = ((volatile uint16_t *)(0x40002400));
     }
     *CTLW0 = 0x0000;
     *CTLW0 = 0x0F01 | i2c_config->clkSrc;
     *CTLW1 = 0x00C8;
     *TBCNT = 2;
     *BRW = i2c_config->div;
-//    P6SEL0 |= 0x30;
-//    P6SEL1 &= ~0x30;                   // configure P6.4 and P6.5 as primary module function
     *CTLW0 = *CTLW0 & 0xFFFE;              // enable eUSCI module
     *IE = i2c_config->intr;                   // disable interrupts
 
