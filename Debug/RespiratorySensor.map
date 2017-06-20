@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v16.9.0                     
 ******************************************************************************
->> Linked Sun Jun 18 15:15:58 2017
+>> Linked Sun Jun 18 21:26:36 2017
 
 OUTPUT FILE NAME:   <RespiratorySensor.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 0000279d
@@ -366,7 +366,7 @@ ffffffff  __c_args__
 000027f5  abort                             
 20000124  adcSamplingPeriod                 
 00001fd1  adc_init                          
-0000207f  adc_start_sample                  
+00002081  adc_start_sample                  
 20000120  adc_state                         
 000028e1  atoi                              
 ffffffff  binit                             
@@ -434,7 +434,7 @@ address   name
 00001de5  scalbnl                           
 00001f4b  clk_init                          
 00001fd1  adc_init                          
-0000207f  adc_start_sample                  
+00002081  adc_start_sample                  
 000020a1  CS_startHFXTWithTimeout           
 000021d9  __aeabi_memcpy                    
 000021d9  __aeabi_memcpy4                   

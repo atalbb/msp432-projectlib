@@ -73,7 +73,7 @@ void adc_init()
     MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
     MAP_REF_A_enableReferenceVoltage();
     MAP_ADC14_enableModule();
-    MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_4, ADC_DIVIDER_1,
+    MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_4, ADC_DIVIDER_4,
             0);
 
     /* Configuring GPIOs (5.5 A0) */
@@ -91,11 +91,11 @@ void adc_init()
 
     /* Enabling/Toggling Conversion */
     MAP_ADC14_enableConversion();
-    MAP_ADC14_toggleConversionTrigger();
+    //MAP_ADC14_toggleConversionTrigger();
 
     /* Enabling interrupts */
-    MAP_ADC14_enableInterrupt(ADC_INT0);
-    MAP_Interrupt_enableInterrupt(INT_ADC14);
+    //MAP_ADC14_enableInterrupt(ADC_INT0);
+    //MAP_Interrupt_enableInterrupt(INT_ADC14);
 }
 
 void adc_start_sample(){
