@@ -10,6 +10,7 @@ CMD_SRCS += \
 
 C_SRCS += \
 ../adc.c \
+../algorithm.c \
 ../clk.c \
 ../debug.c \
 ../main.c \
@@ -20,6 +21,7 @@ C_SRCS += \
 
 C_DEPS += \
 ./adc.d \
+./algorithm.d \
 ./clk.d \
 ./debug.d \
 ./main.d \
@@ -30,6 +32,7 @@ C_DEPS += \
 
 OBJS += \
 ./adc.obj \
+./algorithm.obj \
 ./clk.obj \
 ./debug.obj \
 ./main.obj \
@@ -40,6 +43,7 @@ OBJS += \
 
 OBJS__QUOTED += \
 "adc.obj" \
+"algorithm.obj" \
 "clk.obj" \
 "debug.obj" \
 "main.obj" \
@@ -50,6 +54,7 @@ OBJS__QUOTED += \
 
 C_DEPS__QUOTED += \
 "adc.d" \
+"algorithm.d" \
 "clk.d" \
 "debug.d" \
 "main.d" \
@@ -60,6 +65,7 @@ C_DEPS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../adc.c" \
+"../algorithm.c" \
 "../clk.c" \
 "../debug.c" \
 "../main.c" \

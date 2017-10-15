@@ -70,10 +70,10 @@ void adc_init()
 
     /* Initializing ADC (MCLK/1/4) */
     /* Setting reference voltage to 2.5  and enabling reference */
-    MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
-    MAP_REF_A_enableReferenceVoltage();
+//    MAP_REF_A_setReferenceVoltage(REF_A_VREF2_5V);
+//    MAP_REF_A_enableReferenceVoltage();
     MAP_ADC14_enableModule();
-    MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_4, ADC_DIVIDER_1,
+    MAP_ADC14_initModule(ADC_CLOCKSOURCE_MCLK, ADC_PREDIVIDER_4, ADC_DIVIDER_4,
             0);
 
     /* Configuring GPIOs (5.5 A0) */
@@ -83,7 +83,7 @@ void adc_init()
     /* Configuring ADC Memory */
     MAP_ADC14_configureSingleSampleMode(ADC_MEM0, true);
     MAP_ADC14_configureConversionMemory(ADC_MEM0,
-            ADC_VREFPOS_INTBUF_VREFNEG_VSS,
+             ADC_VREFPOS_AVCC_VREFNEG_VSS,
              ADC_INPUT_A0, false);
 
     /* Configuring Sample Timer */

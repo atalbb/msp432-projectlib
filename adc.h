@@ -8,7 +8,7 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-#define ADC_VREF        (2.5)
+#define ADC_VREF        (3.3)
 #define ADC_MAX_QUANT   (16383.0)
 #define ADC_CHANNELS    2
 #define TEMP_CH          0

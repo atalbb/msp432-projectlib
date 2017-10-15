@@ -11,6 +11,7 @@
 
 /* DriverLib Includes */
 #include "driverlib.h"
+#include "debug.h"
 
 /* Standard Includes */
 #include <stdio.h>
@@ -21,16 +22,19 @@ int fputs(const char *_ptr, register FILE *_fp);
 
 int fputc(int _c, register FILE *_fp)
 {
-  while(!(UCA0IFG&UCTXIFG));
-  UCA0TXBUF = (unsigned char) _c;
-
-  return((unsigned char)_c);
+#ifdef __DEBUG__
+        while(!(UCA0IFG&UCTXIFG));
+        UCA0TXBUF = (unsigned char) _c;
+        return((unsigned char)_c);
+#endif
 }
 
 int fputs(const char *_ptr, register FILE *_fp)
 {
-  unsigned int i, len;
 
+#ifdef __DEBUG__
+
+  unsigned int i, len;
   len = strlen(_ptr);
 
   for(i=0 ; i<len ; i++)
@@ -40,4 +44,5 @@ int fputs(const char *_ptr, register FILE *_fp)
   }
 
   return len;
+#endif
 }

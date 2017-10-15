@@ -6,8 +6,6 @@
  */
 #include "driverlib.h"
 #include "debug.h"
-uint32_t g_SMCLKfreq;
-uint32_t g_MCLKfreq;
 static void clockInit48MHzXTL(void) {  // sets the clock module to use the external 48 MHz crystal
 
     /* Configuring pins for peripheral/crystal usage */
@@ -31,13 +29,6 @@ void clk_init(){
     clockInit48MHzXTL();  // set up the clock to use the crystal oscillator on the Launchpad
     MAP_CS_initClockSignal(CS_MCLK, CS_HFXTCLK_SELECT, CS_CLOCK_DIVIDER_1);    /* MCLK = 48 Mhz*/
     MAP_CS_initClockSignal(CS_SMCLK, CS_HFXTCLK_SELECT, CS_CLOCK_DIVIDER_4); /* SMCLK = 48/4 = 12Mhz*/
-    g_SMCLKfreq=MAP_CS_getSMCLK();  // get SMCLK value to verify it was set correctly
-    g_MCLKfreq=MAP_CS_getMCLK();  // get MCLK value
-    #ifdef __DEBUG__
-        printf("MCLK = %d Hz, SMCLK = %d Hz\r\n",g_MCLKfreq,g_SMCLKfreq);
-    #else
-        #error "__DEBUG__ not defined in debug.h"
-    #endif
 }
 
 
