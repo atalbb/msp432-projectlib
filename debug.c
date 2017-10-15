@@ -28,5 +28,5 @@ void debug_init(){
 
     /* Enable UART module */
     MAP_UART_enableModule(EUSCI_A0_BASE);
-    printf(" Program Started!\r\n");
+    //printf(" Program Started!\r\n");
 }

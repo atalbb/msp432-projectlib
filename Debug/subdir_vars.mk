@@ -9,8 +9,8 @@ CMD_SRCS += \
 ../msp432p401r.cmd 
 
 C_SRCS += \
+../RRAlgorithm.c \
 ../adc.c \
-../algorithm.c \
 ../clk.c \
 ../debug.c \
 ../main.c \
@@ -20,8 +20,8 @@ C_SRCS += \
 ../systick.c 
 
 C_DEPS += \
+./RRAlgorithm.d \
 ./adc.d \
-./algorithm.d \
 ./clk.d \
 ./debug.d \
 ./main.d \
@@ -31,8 +31,8 @@ C_DEPS += \
 ./systick.d 
 
 OBJS += \
+./RRAlgorithm.obj \
 ./adc.obj \
-./algorithm.obj \
 ./clk.obj \
 ./debug.obj \
 ./main.obj \
@@ -42,8 +42,8 @@ OBJS += \
 ./systick.obj 
 
 OBJS__QUOTED += \
+"RRAlgorithm.obj" \
 "adc.obj" \
-"algorithm.obj" \
 "clk.obj" \
 "debug.obj" \
 "main.obj" \
@@ -53,8 +53,8 @@ OBJS__QUOTED += \
 "systick.obj" 
 
 C_DEPS__QUOTED += \
+"RRAlgorithm.d" \
 "adc.d" \
-"algorithm.d" \
 "clk.d" \
 "debug.d" \
 "main.d" \
@@ -64,8 +64,8 @@ C_DEPS__QUOTED += \
 "systick.d" 
 
 C_SRCS__QUOTED += \
+"../RRAlgorithm.c" \
 "../adc.c" \
-"../algorithm.c" \
 "../clk.c" \
 "../debug.c" \
 "../main.c" \

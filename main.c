@@ -4,6 +4,7 @@
 #include "clk.h"
 #include "debug.h"
 #include "systick.h"
+#include "RRAlgorithm.h"
 
 /* Standard Includes */
 #include <stdint.h>
@@ -11,23 +12,23 @@
 #include <string.h>
 
 #define CPU_CLK_MHZ          48
-#define ADC_SAMPLING_1MS     50
+#define ADC_SAMPLING_1MS     RR_SAMPLE_TIME_MS
+//#define CIRCULAR_BUFF_SIZE   500
 
-typedef enum{
-    ADC_IDLE = 0,
-    ADC_READY,
-    ADC_CONV_FINISHED
-}_E_ADC_STATE;
 
-int adc_state = 0;
+uint8_t  g_adc_state = 0;
 uint32_t SMCLKfreq;
 uint32_t MCLKfreq;
-uint32_t adcSamplingPeriod = ADC_SAMPLING_1MS;
+uint32_t g_adcSamplingPeriod = ADC_SAMPLING_1MS;
+_E_RR_STATE g_rr_state = RR_INITIAL;
+uint16_t g_rr_buff[RR_BUF_SIZE]={0};
+int16_t g_rr_temp_buff[RR_BUF_SIZE]={0};
+//uint16_t g_circular_buff_ptr = 0;
+uint16_t g_rr_sample_count = 0;
+uint8_t g_rr_cal_signal = 0;
 
 
-
-float normalizedADCRes = 0.0;
-uint32_t curADCResult = 0;
+uint32_t g_curADCResult = 0;
 
 /* On board LED initialization Function
  * Blinking LED is used to verify sampling rate
@@ -40,10 +41,25 @@ static void led_init(){
     GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
     GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
 }
-static uint32_t time = 0;
-static uint32_t sample_count = 0;
+uint16_t calculate_RR(uint16_t *samples){
+    int16_t threshhold= 0;
+    int16_t peaks = 0;
+    uint32_t avg = rr_find_mean(samples);
+    diff_from_mean(samples,g_rr_temp_buff,avg);
+    four_pt_MA(g_rr_temp_buff);
+    diff_btw_4pt_MA(g_rr_temp_buff);
+    two_pt_MA(g_rr_temp_buff);
+    hamming_window(g_rr_temp_buff);
+    threshhold = threshold_calc(g_rr_temp_buff);
+    peaks= myPeakCounter(g_rr_temp_buff, RR_BUF_SIZE-HAM_SIZE,threshhold);
+    return (60/RR_INITIAL_FRAME_TIME_S) * peaks;
+    //return 3 * peaks;
+
+}
 int main(void)
 {
+    uint32_t i = 0;
+    uint16_t respiratory_rate = 0;
     /* Halting WDT and disabling master interrupts */
     WDTCTL = WDTPW | WDTHOLD;                 // Stop WDT
 
@@ -55,12 +71,19 @@ int main(void)
     led_init();
     MAP_Interrupt_enableMaster();
     while(1){
-        if(adc_state == 1){
-            sample_count++;
-            //P1->OUT ^= 0x01;
-           // printf("%.2f,\r\n",normalizedADCRes);
-            printf("%d,\r\n",curADCResult);
-            adc_state = 2;
+        if(g_adc_state == 1){
+            //printf("%d,\r\n",g_curADCResult);
+            if(g_rr_cal_signal == 1){ // calculate Respiratory Rate
+                g_rr_cal_signal = 0;
+                /* Have to calculate RR*/
+                respiratory_rate = calculate_RR(g_rr_buff);
+                printf("Br is %d\r\n",respiratory_rate);
+                //dumping the first X sets of samples and shift the last RR_BUF_SIZE-X sets of samples to the top
+                for(i=RR_STABLE_BUF_SIZE;i<RR_BUF_SIZE;i++){
+                    g_rr_buff[i-RR_STABLE_BUF_SIZE]=g_rr_buff[i];
+                }
+            }
+            g_adc_state = 2;
         }
     }
 }
@@ -73,10 +96,33 @@ void ADC14_IRQHandler(void)
     MAP_ADC14_clearInterruptFlag(status);
     if (ADC_INT0 & status)
     {
-         curADCResult = MAP_ADC14_getResult(ADC_MEM0);
-//         sample_count++;
-         //normalizedADCRes = curADCResult * (ADC_VREF/ADC_MAX_QUANT)*1000;
-         adc_state = 1;
+        g_curADCResult = g_rr_buff[g_rr_sample_count++]= MAP_ADC14_getResult(ADC_MEM0);
+        g_adc_state = 1;
+        switch(g_rr_state){
+            case RR_INITIAL:
+                if(g_rr_sample_count == RR_BUF_SIZE){
+                    g_rr_sample_count = 0;
+                    g_rr_state = RR_STABLE;
+                    g_rr_cal_signal = 1;
+                }
+                break;
+            case RR_STABLE:
+                if(g_rr_sample_count == RR_STABLE_BUF_SIZE){
+                    g_rr_sample_count = 0;
+                    g_rr_cal_signal = 1;
+                    // Send signal to replace old X samples with new samples
+                    // Send signal to calculate RR in main
+                }
+                break;
+
+            default:
+
+                break;
+
+        }
+
+
+
     }
 }
 
@@ -84,17 +130,12 @@ void ADC14_IRQHandler(void)
 void SysTick_Handler(void)
 {
     static uint32_t i = 0;
-
-    if(adc_state == 2){
-        if(++i >= adcSamplingPeriod){
+    if(g_adc_state == 2){
+        if(++i >= g_adcSamplingPeriod){
             i = 0;
-            time += 50;
-            if(time == 60000){
-                i = 0;
-            }
             MAP_ADC14_toggleConversionTrigger();
-            adc_state = 0;
             P1->OUT ^= 0x01;
+            g_adc_state = 0;
         }
     }
 }

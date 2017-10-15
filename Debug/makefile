@@ -10,8 +10,8 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./RRAlgorithm.obj" \
 "./adc.obj" \
-"./algorithm.obj" \
 "./clk.obj" \
 "./debug.obj" \
 "./main.obj" \
@@ -129,41 +129,41 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-RespiratorySensorTest.out \
+RespiratorySensorFinal.out \
 
 EXE_OUTPUTS__QUOTED += \
-"RespiratorySensorTest.out" \
+"RespiratorySensorFinal.out" \
 
 BIN_OUTPUTS += \
-RespiratorySensorTest.hex \
+RespiratorySensorFinal.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"RespiratorySensorTest.hex" \
+"RespiratorySensorFinal.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "RespiratorySensorTest.out"
+	@$(MAKE) --no-print-directory -Onone "RespiratorySensorFinal.out"
 
 # Tool invocations
-RespiratorySensorTest.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+RespiratorySensorFinal.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MSP432 Linker'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=all --define=__MSP432P401R__ --define=TARGET_IS_MSP432P4XX --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"RespiratorySensorTest.map" --heap_size=1024 --stack_size=512 -i"C:/ti/ccsv7/ccs_base/arm/include" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="RespiratorySensorTest_linkInfo.xml" --rom_model -o "RespiratorySensorTest.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=all --define=__MSP432P401R__ --define=TARGET_IS_MSP432P4XX --define=ccs -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"RespiratorySensorFinal.map" --heap_size=1024 --stack_size=512 -i"C:/ti/ccsv7/ccs_base/arm/include" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="RespiratorySensorFinal_linkInfo.xml" --rom_model -o "RespiratorySensorFinal.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-RespiratorySensorTest.hex: $(EXE_OUTPUTS)
+RespiratorySensorFinal.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: MSP432 Hex Utility'
-	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/bin/armhex" --memwidth=8 --romwidth=8 -o "RespiratorySensorTest.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.0.LTS/bin/armhex" --memwidth=8 --romwidth=8 -o "RespiratorySensorFinal.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "adc.obj" "algorithm.obj" "clk.obj" "debug.obj" "main.obj" "printfOverride.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" "systick.obj" 
-	-$(RM) "adc.d" "algorithm.d" "clk.d" "debug.d" "main.d" "printfOverride.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" "systick.d" 
+	-$(RM) "RRAlgorithm.obj" "adc.obj" "clk.obj" "debug.obj" "main.obj" "printfOverride.obj" "startup_msp432p401r_ccs.obj" "system_msp432p401r.obj" "systick.obj" 
+	-$(RM) "RRAlgorithm.d" "adc.d" "clk.d" "debug.d" "main.d" "printfOverride.d" "startup_msp432p401r_ccs.d" "system_msp432p401r.d" "systick.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
