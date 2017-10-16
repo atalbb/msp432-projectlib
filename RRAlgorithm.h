@@ -11,7 +11,7 @@
 /* Configurable defines */
 #define RR_SPS                     20//25//50
 #define RR_INITIAL_FRAME_TIME_S    30
-#define RR_STABLE_FRAME_TIME_S     4
+#define RR_STABLE_FRAME_TIME_S     5
 
 
 //#define BUF_SIZE    1200
