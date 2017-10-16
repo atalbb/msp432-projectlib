@@ -42,7 +42,7 @@ static void led_init(){
     GPIO_setAsOutputPin(GPIO_PORT_P1, GPIO_PIN0);
 }
 uint16_t calculate_RR(uint16_t *samples){
-    int16_t threshhold= 0;
+    int16_t threshold= 0;
     int16_t peaks = 0;
     uint32_t avg = rr_find_mean(samples);
     diff_from_mean(samples,g_rr_temp_buff,avg);
@@ -50,8 +50,9 @@ uint16_t calculate_RR(uint16_t *samples){
     diff_btw_4pt_MA(g_rr_temp_buff);
     two_pt_MA(g_rr_temp_buff);
     hamming_window(g_rr_temp_buff);
-    threshhold = threshold_calc(g_rr_temp_buff);
-    peaks= myPeakCounter(g_rr_temp_buff, RR_BUF_SIZE-HAM_SIZE,threshhold);
+    threshold = threshold_calc(g_rr_temp_buff);
+    //printf("Threshold = %d", threshold);
+    peaks= myPeakCounter(g_rr_temp_buff, RR_BUF_SIZE-HAM_SIZE,threshold);
     printf("Peaks = %d, ",peaks);
     return (60/RR_INITIAL_FRAME_TIME_S) * peaks;
     //return 3 * peaks;
@@ -102,14 +103,14 @@ void ADC14_IRQHandler(void)
         switch(g_rr_state){
             case RR_INITIAL:
                 if(g_rr_sample_count == RR_BUF_SIZE){
-                    g_rr_sample_count = 0;
+                    g_rr_sample_count = RR_BUF_SIZE - RR_STABLE_BUF_SIZE;
                     g_rr_state = RR_STABLE;
                     g_rr_cal_signal = 1;
                 }
                 break;
             case RR_STABLE:
-                if(g_rr_sample_count == RR_STABLE_BUF_SIZE){
-                    g_rr_sample_count = 0;
+                if(g_rr_sample_count == RR_BUF_SIZE){
+                    g_rr_sample_count = RR_BUF_SIZE - RR_STABLE_BUF_SIZE;
                     g_rr_cal_signal = 1;
                     // Send signal to replace old X samples with new samples
                     // Send signal to calculate RR in main
