@@ -52,6 +52,7 @@ uint16_t calculate_RR(uint16_t *samples){
     hamming_window(g_rr_temp_buff);
     threshhold = threshold_calc(g_rr_temp_buff);
     peaks= myPeakCounter(g_rr_temp_buff, RR_BUF_SIZE-HAM_SIZE,threshhold);
+    printf("Peaks = %d, ",peaks);
     return (60/RR_INITIAL_FRAME_TIME_S) * peaks;
     //return 3 * peaks;
 
