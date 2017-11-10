@@ -39,5 +39,5 @@ void four_pt_MA(double *an_x);
 void ButterworthLowpassFilter0040SixthOrder(const double *src, double *dest, int size);
 uint16_t myPeakCounter(double  *pn_x, int32_t n_size, double n_min_height);
 double threshold_calc(double *an_dx);
-
+void ButterworthLowpassFilter0100SixthOrder(const double src[], double dest[], int size);
 #endif /* RRALGORITHM_H_ */

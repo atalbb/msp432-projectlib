@@ -48,7 +48,8 @@ uint16_t calculate_RR(double *samples){
     double avg = rr_find_mean(samples);
     diff_from_mean(samples,g_rr_temp_buff,avg);
     four_pt_MA(g_rr_temp_buff);
-    ButterworthLowpassFilter0040SixthOrder(g_rr_temp_buff,g_rr_filter_values,RR_BUF_SIZE-MA4_SIZE+1);
+    //ButterworthLowpassFilter0040SixthOrder(g_rr_temp_buff,g_rr_filter_values,RR_BUF_SIZE-MA4_SIZE+1);
+    ButterworthLowpassFilter0100SixthOrder(g_rr_temp_buff,g_rr_filter_values,RR_BUF_SIZE-MA4_SIZE+1);
     threshold = threshold_calc(g_rr_filter_values);
     printf("Threshold = %lf\r\n", threshold);
     peaks= myPeakCounter(g_rr_filter_values,RR_BUF_SIZE-MA4_SIZE+1,threshold);
